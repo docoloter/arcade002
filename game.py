@@ -218,3 +218,14 @@ all_sprites.add(door)
 
 
 #Конец игры (Делает ---)
+local_shift - shift % win width 
+window.blit ( back , ( local_shift , 0 ) ) 
+if local shift ! = 0 : 
+	window.blit ( back , ( local_shift - win_width , 0 ) )
+all sprites.draw ( window ) 
+bombs.draw ( window )
+if sprite.collide_rect ( robin , door ) :
+	finished = True 
+	# window.fill ( c_BLACK ) 
+	font.render ( " YOU WIN ! " , 1 , C_RED ) 
+	window.blit ( text , ( 258 )
