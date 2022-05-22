@@ -182,6 +182,25 @@ while run:
                 robin.x_speed = 0
 
 #В цикле пока не финиш (Делает -Артем)
+#В цикле пока не финиш (Делает --)
+	if not finished:
+	    all_sprite.update()
+	    sprite.groupcollide(bombs, all_sprites, True, True)
+	    if sprite.spritecollide(robin, enemies, False):
+		robin.kill()
+
+	    if (
+		robin.rect.x > right_bound and robin.x_speed > 0
+		or
+		robin.rect.x < left_bound and robin.x_speed < 0
+	    ):
+		shift -= robin.x_speed
+		for s in all_sprites:
+		    s.rect.x -= robin.x_speed
+		for s in bombs:
+		    s.rect.x -= robin.x_speed
+		for s in enemies:
+		    s.rect.x -= robin.x_speed
 
 
 
