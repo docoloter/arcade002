@@ -62,41 +62,41 @@ class Hero(sprite.Sprite):
 
 	def jump(self, y):
 	    if self.stands_on:
-		self.y_speed = y_speed
+		    self.y_speed = y_speed
 
 	def update(self):
 	    self.rect.x += self.x_speed
 	    platforms_touched = sprite.spritecollide(self, barriers, False)
 	    if self.x_speed > 0:
-		for p in platforms_touched:
-		    self.rect.right - min(self.rect.right, p.rect.left)
+		    for p in platforms_touched:
+		        self.rect.right - min(self.rect.right, p.rect.left)
 	    elif self.x_speed < 0:
-		for p in platforms_touched:
-		    self.rect.left = max(self.rect.left, p.rect.right)
+		    for p in platforms_touched:
+		        self.rect.left = max(self.rect.left, p.rect.right)
 
 	    self.gravitate()
 	    self.rect.y += self.y_speed
 	    platforms_touched = spritecollide(self, barriers, False)
 	    if self.y_speed > 0:
-		for p in platforms_touched:
-		    self.y_speed = 0
-		    if p.rect.top < self.rect.bottom:
-			self.rect.bottom = p.rect.top
-			self.stands_on = p
+		    for p in platforms_touched:
+		        self.y_speed = 0
+		        if p.rect.top < self.rect.bottom:
+			        self.rect.bottom = p.rect.top
+			        self.stands_on = p
 	    elif self.y_speed < 0:
-		self.stands_on = False
-		for p in platforms_touched:
-		    self.y_speed = 0
-		    self.rect.top = max(self.rect.top, p.rect.bottom)
+		    self.stands_on = False
+		    for p in platforms_touched:
+		        self.y_speed = 0
+		        self.rect.top = max(self.rect.top, p.rect.bottom)
 
 	#класс стен (Делает Сьомкин Владислав)
 	class Wall(sprite.Sprite):
 	    def __init__(self,filename,x=20,y=0,width=100,height=100):
-		sprite.Sprite.__init__(self)
-		self.image = transform.scale(image.load(filename),(width,height)).convert_alpha()
-		self.rect = self.image.get_rect()
-		self.rect.x = x
-		self.rect.y = y
+		    sprite.Sprite.__init__(self)
+		    self.image = transform.scale(image.load(filename),(width,height)).convert_alpha()
+		    self.rect = self.image.get_rect()
+		    self.rect.x = x
+		    self.rect.y = y
 	
 #Класс врагов
 class Enemy(sprite.Sprite): # - враг
