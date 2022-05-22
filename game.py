@@ -46,7 +46,7 @@ class FinalSprite(sprite.Sprite):
         
 #главный герой свойтва (Делает Кривша Анатолий)
 class Hero(sprite.Sprite):
-	def __init__(self, filename, x_speed = 0, y_speed = 0, x = x_start, width = 60, height = 60):
+	def __init__(self, filename, x_speed = 0, y_speed = 0, y=y_start, x=x_start, width = 60, height = 60):
 		sprite.Sprite.__init__(self)
 		self.image = transform.scale(image.load(filename), (width, height)).convert_alpha()
 		self.rect = self.image.get_rect()
@@ -89,14 +89,14 @@ class Hero(sprite.Sprite):
 		        self.y_speed = 0
 		        self.rect.top = max(self.rect.top, p.rect.bottom)
 
-	#класс стен (Делает Сьомкин Владислав)
-	class Wall(sprite.Sprite):
-	    def __init__(self,filename,x=20,y=0,width=100,height=100):
-		    sprite.Sprite.__init__(self)
-		    self.image = transform.scale(image.load(filename),(width,height)).convert_alpha()
-		    self.rect = self.image.get_rect()
-		    self.rect.x = x
-		    self.rect.y = y
+#класс стен (Делает Сьомкин Владислав)
+class Wall(sprite.Sprite):
+	def __init__(self,filename,x=20,y=0,width=100,height=100):
+		sprite.Sprite.__init__(self)
+		self.image = transform.scale(image.load(filename),(width,height)).convert_alpha()
+		self.rect = self.image.get_rect()
+		self.rect.x = x
+		self.rect.y = y
 	
 #Класс врагов
 class Enemy(sprite.Sprite): # - враг
@@ -134,15 +134,9 @@ list_blocks=['1100100010001111','00110100000','000011110000111','001111111111111
 for i in range(len(list_blocks)):
     for j in range(len(list_blocks[i])):
         print(i,j)
-        w = wall(img_wall,(j)*80,(i+1)*130,100,50)
+        w = Wall(img_wall,(j)*80,(i+1)*130,100,50)
         barriers.add(w)
         all_sprites.add(w)
-
-
-
-
-
-
 
 #создаем врагов, добавлям их:
 en = Enemy(300, 330)
@@ -182,51 +176,24 @@ while run:
                 robin.x_speed = 0
 
 #В цикле пока не финиш (Делает -Артем)
-#В цикле пока не финиш (Делает --)
 	if not finished:
 	    all_sprite.update()
 	    sprite.groupcollide(bombs, all_sprites, True, True)
 	    if sprite.spritecollide(robin, enemies, False):
-		robin.kill()
+		    robin.kill()
 
 	    if (
-		robin.rect.x > right_bound and robin.x_speed > 0
-		or
-		robin.rect.x < left_bound and robin.x_speed < 0
+		    robin.rect.x > right_bound and robin.x_speed > 0
+		    or
+		    robin.rect.x < left_bound and robin.x_speed < 0
 	    ):
-		shift -= robin.x_speed
-		for s in all_sprites:
-		    s.rect.x -= robin.x_speed
-		for s in bombs:
-		    s.rect.x -= robin.x_speed
-		for s in enemies:
-		    s.rect.x -= robin.x_speed
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		    shift -= robin.x_speed
+		    for s in all_sprites:
+		        s.rect.x -= robin.x_speed
+		    for s in bombs:
+		        s.rect.x -= robin.x_speed
+		    for s in enemies:
+		        s.rect.x -= robin.x_speed
 
         #Конец игры (Делает ---)
         local_shift - shift % win_width 
