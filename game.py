@@ -219,7 +219,7 @@ while run:
         #Конец игры (Делает ---)
         local_shift - shift % win_width 
         window.blit(back, (local_shift, 0 )) 
-        if local_shift ! = 0 :
+        if local_shift != 0:
             window.blit(back, (local_shift - win_width, 0 ))
         all_sprites.draw(window)
         bombs.draw(window)
