@@ -216,15 +216,26 @@ while run:
 
 
 
-#Конец игры (Делает ---)
-local_shift - shift % win width 
-window.blit ( back , ( local_shift , 0 ) ) 
-if local shift ! = 0 : 
-	window.blit ( back , ( local_shift - win_width , 0 ) )
-all sprites.draw ( window ) 
-bombs.draw ( window )
-if sprite.collide_rect ( robin , door ) :
-	finished = True 
-	# window.fill ( c_BLACK ) 
-	font.render ( " YOU WIN ! " , 1 , C_RED ) 
-	window.blit ( text , ( 258 )
+        #Конец игры (Делает ---)
+        local_shift - shift % win_width 
+        window.blit(back, (local_shift, 0 )) 
+        if local_shift ! = 0 :
+            window.blit(back, (local_shift - win_width, 0 ))
+        all_sprites.draw(window)
+        bombs.draw(window)
+        if sprite.collide_rect(robin, door):
+            finished = True
+            # window.fill ( c_BLACK ) 
+            text = font.render("YOU WIN!", 1, C_RED) 
+            window.blit(text, (250,250))
+
+        if robin not in all_sprites or robin.rect.top > win_height:
+            finished = True
+            text = font.render('GAME OVER', 1, C_RED)
+            window.blit(text, (250, 250))
+    
+    display.update()
+
+    #пауза
+    time.delay(20)
+display.update()
