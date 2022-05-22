@@ -167,7 +167,6 @@ door = FinalSprite(img_file_door, win_width + 500, win_height - 150, 0)
 all_sprites.add(door)
 
 #основной цикл игры, управление (Делает --)
-
 run = True
 finished = False
 
@@ -188,26 +187,6 @@ while run:
                 robin.x_speed = 0
             elif e.key == K_RIGHT:
                 robin.x_speed = 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #В цикле пока не финиш (Делает --)
 
