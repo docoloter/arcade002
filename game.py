@@ -36,8 +36,8 @@ mixer.music.play()
 
 #финальный спрайт (Делает Ширяев Андрей)
 class FinalSprite(sprite.Sprite):
-    def _init_(self, player_image, player_x, player_y, player_speed):
-        sprite.Sprite._init_ (self)
+    def __init__(self, player_image, player_x, player_y, player_speed):
+        sprite.Sprite.__init__ (self)
         self.image = transform.scale(image.load(player_image), (100, 100)) 
         self.speed = player_speed 
         self.rect = self.image.get_rect() 
@@ -46,7 +46,7 @@ class FinalSprite(sprite.Sprite):
         
 #главный герой свойтва (Делает Кривша Анатолий)
 class Hero(sprite.Sprite):
-	def __init__(self, filename, x_speed = 0, y_speed = 0, y=y_start, x=x_start, width = 60, height = 60):
+	def __init__(self, filename, x_speed = 0, y_speed = 0, x=x_start,y=y_start, width = 60, height = 60):
 		sprite.Sprite.__init__(self)
 		self.image = transform.scale(image.load(filename), (width, height)).convert_alpha()
 		self.rect = self.image.get_rect()
@@ -62,7 +62,7 @@ class Hero(sprite.Sprite):
 
 	def jump(self, y):
 	    if self.stands_on:
-		    self.y_speed = y_speed
+		    self.y_speed = y
 
 	def update(self):
 	    self.rect.x += self.x_speed
@@ -76,7 +76,7 @@ class Hero(sprite.Sprite):
 
 	    self.gravitate()
 	    self.rect.y += self.y_speed
-	    platforms_touched = spritecollide(self, barriers, False)
+	    platforms_touched = sprite.spritecollide(self, barriers, False)
 	    if self.y_speed > 0:
 		    for p in platforms_touched:
 		        self.y_speed = 0
@@ -175,28 +175,28 @@ while run:
             elif e.key == K_RIGHT:
                 robin.x_speed = 0
 
-#В цикле пока не финиш (Делает -Артем)
-	if not finished:
-	    all_sprite.update()
-	    sprite.groupcollide(bombs, all_sprites, True, True)
-	    if sprite.spritecollide(robin, enemies, False):
-		    robin.kill()
 
-	    if (
-		    robin.rect.x > right_bound and robin.x_speed > 0
-		    or
-		    robin.rect.x < left_bound and robin.x_speed < 0
-	    ):
-		    shift -= robin.x_speed
-		    for s in all_sprites:
-		        s.rect.x -= robin.x_speed
-		    for s in bombs:
-		        s.rect.x -= robin.x_speed
-		    for s in enemies:
-		        s.rect.x -= robin.x_speed
+    if not finished:
+        all_sprites.update()
+        sprite.groupcollide(bombs, all_sprites, True, True)
+        if sprite.spritecollide(robin, enemies, False):
+            robin.kill()
+
+        if (
+            robin.rect.x > right_bound and robin.x_speed > 0
+            or
+            robin.rect.x < left_bound and robin.x_speed < 0
+        ):
+            shift -= robin.x_speed
+            for s in all_sprites:
+                s.rect.x -= robin.x_speed
+            for s in bombs:
+                s.rect.x -= robin.x_speed
+            for s in enemies:
+                s.rect.x -= robin.x_speed
 
         #Конец игры (Делает ---)
-        local_shift - shift % win_width 
+        local_shift = shift % win_width 
         window.blit(back, (local_shift, 0 )) 
         if local_shift != 0:
             window.blit(back, (local_shift - win_width, 0 ))
