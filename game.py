@@ -4,6 +4,7 @@ from pygame import*
 font.init()
 
 font = font.Font(None, 72)
+font2 = font.Font(None, 72)
 win_width = 800
 win_height = 600
 left_bound = win_width / 40
@@ -126,9 +127,14 @@ all_sprites = sprite.Group()
 barriers = sprite.Group()
 enemies = sprite.Group()
 bombs = sprite.Group()
+# список ключей:
+keys = sprite.Group()
+key=FinalSprite(img_key, 500,  130, 0)
+keys.add(key)
+all_sprites.add(key)
 robin = Hero(img_file_hero)
 all_sprites.add(robin)
-
+count_k=0
 #создаем стены, добавляем их:
 list_blocks=['1100100010001111','00110100000','000011110000111','0011111111111111111111111111','00111111111111111111111111111']
 for i in range(len(list_blocks)):
@@ -139,7 +145,7 @@ for i in range(len(list_blocks)):
             barriers.add(w)
             all_sprites.add(w)
 
-#создаем врагов, добавлям их:
+#создаем врагов, добавлям их:'1100100010001111','00110100000','000011110000111','0011111111111111111111111111','00111111111111111111111111111'
 en = Enemy(300, 330)
 all_sprites.add(en)
 enemies.add(en)
@@ -182,6 +188,10 @@ while run:
         sprite.groupcollide(bombs, all_sprites, True, True)
         if sprite.spritecollide(robin, enemies, False):
             robin.kill()
+         if sprite.spritecollide(robin, keys, False):
+            key.kill() # метод kill убирает спрайт из всех групп, в которых он числится
+            count_k+=1
+            count_keys = font2.render("Количество ключей: "+str(count_k), 1, C_BLACK)
 
         if (
             robin.rect.x > right_bound and robin.x_speed > 0
