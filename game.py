@@ -3,7 +3,7 @@ from random import randint
 from pygame import*
 font.init()
 
-font = font.Font(None, 72)
+font1 = font.Font(None, 72)
 font2 = font.Font(None, 72)
 win_width = 800
 win_height = 600
@@ -20,7 +20,7 @@ img_file_enemy = 'sprite.png'
 img_file_bomb = 'bomb.png'
 img_file_door = 'door.png'
 img_wall = 'wall.png'
-
+img_key='key.png'
 FPS = 60
 
 C_WHITE = (255, 255, 255)
@@ -188,7 +188,7 @@ while run:
         sprite.groupcollide(bombs, all_sprites, True, True)
         if sprite.spritecollide(robin, enemies, False):
             robin.kill()
-         if sprite.spritecollide(robin, keys, False):
+        if sprite.spritecollide(robin, keys, False):
             key.kill() # метод kill убирает спрайт из всех групп, в которых он числится
             count_k+=1
             count_keys = font2.render("Количество ключей: "+str(count_k), 1, C_BLACK)
@@ -216,12 +216,12 @@ while run:
         if sprite.collide_rect(robin, door):
             finished = True
             # window.fill ( c_BLACK ) 
-            text = font.render("YOU WIN!", 1, C_RED) 
+            text = font1.render("YOU WIN!", 1, C_RED) 
             window.blit(text, (250,250))
 
         if robin not in all_sprites or robin.rect.top > win_height:
             finished = True
-            text = font.render('GAME OVER', 1, C_RED)
+            text = font1.render('GAME OVER', 1, C_RED)
             window.blit(text, (250, 250))
     
     display.update()
