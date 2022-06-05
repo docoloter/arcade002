@@ -140,7 +140,7 @@ list_blocks=['1100100010001111','00110100000','000011110000111','001111111111111
 for i in range(len(list_blocks)):
     for j in range(len(list_blocks[i])):
         if list_blocks[i][j]=='1':
-            print(i,j)
+            #print(i,j)
             w = Wall(img_wall,(j)*80,(i+1)*130,100,50)
             barriers.add(w)
             all_sprites.add(w)
