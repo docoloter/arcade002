@@ -133,10 +133,11 @@ all_sprites.add(robin)
 list_blocks=['1100100010001111','00110100000','000011110000111','0011111111111111111111111111','00111111111111111111111111111']
 for i in range(len(list_blocks)):
     for j in range(len(list_blocks[i])):
-        print(i,j)
-        w = Wall(img_wall,(j)*80,(i+1)*130,100,50)
-        barriers.add(w)
-        all_sprites.add(w)
+        if list_blocks[i][j]=='1':
+            print(i,j)
+            w = Wall(img_wall,(j)*80,(i+1)*130,100,50)
+            barriers.add(w)
+            all_sprites.add(w)
 
 #создаем врагов, добавлям их:
 en = Enemy(300, 330)
