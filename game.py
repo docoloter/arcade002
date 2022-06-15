@@ -21,6 +21,8 @@ img_file_bomb = 'bomb.png'
 img_file_door = 'door.png'
 img_wall = 'wall.png'
 img_key='key.png'
+img_button_start='play.png'
+img_file_back_start = "bgmenu.png"
 FPS = 60
 
 C_WHITE = (255, 255, 255)
@@ -119,11 +121,45 @@ class Enemy(sprite.Sprite): # - враг
         else:
             self.rect.x += 5
 
+class CoinSprite(sprite.Sprite):
+  # конструктор класса
+  def __init__(self, filename, player_x, player_y, width=50, height=50):
+        # Вызываем конструктор класса (Sprite):
+        sprite.Sprite.__init__(self)
+
+        # каждый спрайт должен хранить свойство image - изображение
+        # картинка загружается из файла и умещается в прямоугольник нужных размеров:
+        self.image = transform.scale(image.load(filename), (width, height)).convert_alpha() 
+                        # используем convert_alpha, нам надо сохранять прозрачность
+
+            # каждый спрайт должен хранить свойство rect - прямоугольник. Это свойство нужно для определения касаний спрайтов.         
+
+        self.rect = self.image.get_rect()
+        self.rect.x = player_x
+        self.rect.y = player_y
+#Класс кнопок
+class Button(sprite.Sprite):
+    def __init__(self,player_image,player_x,player_y):
+        sprite.Sprite.__init__(self)
+
+        self.image = transform.scale(image.load(player_image),(200,100))
+        self.rect = self.image.get_rect()
+        self.rect.x = player_x
+        self.rect.y = player_y
+    def collidepoint(self,x,y):
+        return self.rect.collidepoint(x,y)
+
+#список кнопок
+buttons=sprite.Group()
+button1=Button(img_button_start,300,250)
+buttons.add(button1)
+
 #запуск игры (Делает Лущик Артем)
 display.set_caption("ARCADA")
 window = display.set_mode([win_width, win_height])
 back = transform.scale(image.load(img_file_back).convert(), (win_width, win_height))
 all_sprites = sprite.Group()
+back_start = transform.scale(image.load(img_file_back_start).convert(), (win_width, win_height))
 barriers = sprite.Group()
 enemies = sprite.Group()
 bombs = sprite.Group()
@@ -181,7 +217,26 @@ while run:
                 robin.x_speed = 0
             elif e.key == K_RIGHT:
                 robin.x_speed = 0
-
+        if e.type == MOUSEBUTTONDOWN and e.button == 1:
+            x,y = e.pos
+            if button1.collidepoint(x,y):
+                finished = False
+                button1.kill(   )
+                robin.kill()
+                for key in keys:
+                    key.kill()
+                for bomb in bombs:
+                    bomb.kill()
+                robin = Hero(img_file_hero)
+                all_sprites.add(robin)
+                key=CoinSprite(img_key,randint(300,500),100,100)
+                keys.add(key)
+                all_sprites.add(key)
+                bomb=Enemy(randint(50,500),200,img_file_bomb,60,60)
+                bombs.add(bomb)
+                count_k=0
+    window.blit(back_start,(0,0))
+    buttons.draw(window)
 
     if not finished:
         all_sprites.update()
